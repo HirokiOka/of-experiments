@@ -2,27 +2,30 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-  ofSetFrameRate(60);
-  ofSetVerticalSync(true);
-  ofBackground(0);
-  ofFill();
+  sampleRate = 44100;
+  amp = 0.5;
+  pan = 0.5;
+  phase = 0;
+  frequency = 440;
 
-  box2d.init();
-  box2d.setGravity(0, 5);
-  box2d.createBounds(0, 0, ofGetWidth(), ofGetHeight());
-  box2d.setFPS(30);
+  //settings
+  ofSoundStreamSettings settings;
+  settings.setOutListener(this);
+  settings.sampleRate = sampleRate;
+  settings.numOutputChannels = 2;
+  settings.numInputChannels = 0;
+  settings.bufferSize = 512;
+  soundStream.setup(settings);
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  box2d.update();
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-  for (int i = 0; i < circles.size(); i++) {
-    circles[i]->draw();
-  }
 
 }
 
@@ -48,15 +51,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-  float r = ofRandom(10, 40);
-  auto circle = make_shared<ofxBox2dCircle>();
-  float red = ofRandom(255);
-  float green = ofRandom(255);
-  float blue = ofRandom(255);
-  ofSetColor(red, green, blue);
-  circle->setPhysics(1.0, 0.8, 0.5);
-  circle->setup(box2d.getWorld(), mouseX, mouseY, r);
-  circles.push_back(circle);
+
 }
 
 //--------------------------------------------------------------
@@ -77,6 +72,24 @@ void ofApp::mouseExited(int x, int y){
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
 
+}
+
+void ofApp::audioRequested(float* output, int bufferSize, int nChannels) {
+  float sample;
+  float phaseDiff;
+
+  phaseDiff = TWO_PI * frequency / sampleRate;
+
+  for (int i = 0; i < bufferSize; i++) {
+    phase += phaseDiff;
+    while (phase > TWO_PI) {
+      phase -= TWO_PI;
+    }
+
+    sample = sin(phase);
+    output[i * nChannels] = sample * pan * amp;
+    output[i * nChannels + 1] = sample * pan * amp;
+  }
 }
 
 //--------------------------------------------------------------
