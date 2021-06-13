@@ -7,7 +7,7 @@ void ofApp::setup(){
 
   ofIcoSpherePrimitive sphere;
   sphere.setRadius(100);
-  sphere.setResolution(5);
+  sphere.setResolution(6);
   mesh = sphere.getMesh();
 
   light.setPosition(-400, 400, 800);
