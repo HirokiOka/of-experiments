@@ -2,5 +2,7 @@
 */obj/
 Makefile
 */config.make
+*/addons.make
+*/Project.xcconfig
 openFrameworks-Info.plist
 
