@@ -1,6 +1,6 @@
-/bin/
-/obj/
+*/bin/
+*/obj/
 Makefile
-config.make
+*/config.make
 openFrameworks-Info.plist
 
