@@ -30,14 +30,23 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
   switch (key) {
-    case 0:
+    case '0':
+      vidGrabber.close();
       vidGrabber.setDeviceID(0);
+      vidGrabber.initGrabber(640, 480);
+      ofLogNotice() << "device: 0" << endl;
       break;
-    case 1:
+    case '1':
+      vidGrabber.close();
       vidGrabber.setDeviceID(1);
+      vidGrabber.initGrabber(640, 480);
+      ofLogNotice() << "device: 1" << endl;
       break;
-    case 2:
+    case '2':
+      vidGrabber.close();
       vidGrabber.setDeviceID(2);
+      vidGrabber.initGrabber(640, 480);
+      ofLogNotice() << "device: 2" << endl;
       break;
   }
 
