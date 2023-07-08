@@ -22,10 +22,11 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
     ofxAssimpModelLoader womanModel;
-    ofVboMesh mesh;
-    bool bUsingMesh;
-		ofNode meshNode;
     ofEasyCam cam;
     ofLight	light;
 		float cameraOrbit;
+    ofVboMesh mesh;
+    bool bUsingMesh;
+		ofNode meshNode;
+    ofImage img;
 };
